@@ -25,8 +25,6 @@ async function validateActionId(req, res, next) {
       message: "problem finding action",
     });
   }
-
-  console.log("validateActionsId middleware");
   next();
 }
 
