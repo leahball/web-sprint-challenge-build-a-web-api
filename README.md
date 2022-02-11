@@ -37,7 +37,7 @@ A _"resetdb"_ script exists that allows you to reset the database to its origina
 
 #### Environment Variables
 
-- [ ] Bring the port number from the `process.env` variable, falling back to `9000` if `process.env.PORT` is undefined **!!!**
+- [x] Bring the port number from the `process.env` variable, falling back to `9000` if `process.env.PORT` is undefined **!!!**
 
 #### Endpoints
 
@@ -137,17 +137,48 @@ We have provided test data for all the resources.
 
 ## Submission format
 
-- [ ] Submit via Codegrade by pushing commits to your `main` branch.
-- [ ] Check Codegrade before the deadline to compare its results against your local tests.
-- [ ] Check Codegrade on the days following the Sprint Challenge for reviewer feedback.
-- [ ] New commits will be evaluated by Codegrade if pushed _before_ the sprint challenge deadline.
+- [x] Submit via Codegrade by pushing commits to your `main` branch.
+- [x] Check Codegrade before the deadline to compare its results against your local tests.
+- [x] Check Codegrade on the days following the Sprint Challenge for reviewer feedback.
+- [x] New commits will be evaluated by Codegrade if pushed _before_ the sprint challenge deadline.
 
 ## Interview Questions
 
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. The core features of Node.js and Express and why they are useful.
+
+answer:
+NODE: Node gave developers the chance to use Javascript to write software, we use server code in the format of JSON to do that. Benefits include:
+-same programming language for server and client
+-javascript is asynchronous, taking full advantage of the processor its running on.
+-access to npm library
+-single-threaded which prevents Deadlock
+
+EXPRESS: a light and unopinionated framework that sits on top of node.js that allows us to build web apps, server SPAs, build RESTful web services that work with JSON, server static content, power real-time applications.
+Features of Express:
+-Middleware (see below)
+-Routing-
+-Convenience helpers with out of the box functionality
+-Views--dynamically render HTML on the server
+
 1. Understand and explain the use of Middleware.
+
+answer: can get the request and response objects, operate on them and when asked to--trigger an action.
+
 1. The basic principles of the REST architectural style.
+
+answer:
+-everything is resources
+-each resource is accessible via a unique URL.
+-Resources can have multiple representations.
+-communications happen over stateless protocol (HTTP)
+-Resource management happens via HTTP methods.
+
 1. Understand and explain the use of Express Routers.
+
+answer: Express routers make use of URL visited and HTTP method used-provides a way to break app into smaller parts. Router for application modularity allows us to have routes to server the SPA and the API.
+
 1. Describe tooling used to manually test the correctness of an API.
+
+answer: Using either HTTPie, Postman or Thunderclient allow full control when making requests. We can use these tools to make POST/PUT/CATCH/DELETE requests for APIs and using test data.

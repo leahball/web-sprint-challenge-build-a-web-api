@@ -27,6 +27,10 @@ server.get("/api/hello", (req, res) => {
   res.json({ message: "api is working" });
 });
 
+server.use("*", (req, res) => {
+  res.send(`<h1>Hello, you got this far!</h1>`);
+});
+
 server.use((err, req, res, next) => {
   //eslint-disable-line
   res.status(500).json({
