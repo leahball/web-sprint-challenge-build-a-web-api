@@ -9,7 +9,7 @@ function logger(req, res, next) {
   next();
 }
 
-async function validateActionsId(req, res, next) {
+async function validateActionId(req, res, next) {
   try {
     const action = await Action.get(req.params.id);
     if (!action) {
@@ -30,13 +30,13 @@ async function validateActionsId(req, res, next) {
   next();
 }
 
-function validateActions(req, res, next) {
+function validateAction(req, res, next) {
   console.log("validateActions middleware");
   next();
 }
 
 module.exports = {
-  validateActionsId,
-  validateActions,
+  validateActionId,
+  validateAction,
   logger,
 };

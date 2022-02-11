@@ -3,11 +3,16 @@ const { logger } = require("./actions/actions-middlware");
 
 // const {} = require("./projects/projects-middleware");
 const server = express();
+const projectsRouter = require("./projects/projects-router");
+const actionsRouter = require("./actions/actions-router");
 const cors = require("cors");
 
 server.use(express.json());
 server.use(logger);
 server.use(cors());
+
+server.use("/api/projects", projectsRouter);
+server.use("/api/actions", actionsRouter);
 
 server.get("/", (req, res) => {
   res.send(`<h2>Let's write some middleware</h2>`);
