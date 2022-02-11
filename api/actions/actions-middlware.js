@@ -1,7 +1,10 @@
 // add middlewares here related to actions
 
 function logger(req, res, next) {
-  console.log(logger);
+  const timestamp = new Date().toLocaleString();
+  const method = req.method;
+  const url = req.originalUrl;
+  console.log(`[${timestamp}] ${method} to ${url}`);
   next();
 }
 
@@ -16,7 +19,7 @@ function validateActions(req, res, next) {
 }
 
 module.exports = {
-  logger,
   validateActionsId,
   validateActions,
+  logger,
 };
