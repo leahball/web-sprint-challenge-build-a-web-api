@@ -29,8 +29,17 @@ async function validateActionId(req, res, next) {
 }
 
 function validateAction(req, res, next) {
-  console.log("validateActions middleware");
-  next();
+  const { project_id, notes, description } = req.body;
+  if (!notes || !description || !project_id) {
+    res.status(400).json({
+      message: "missing required fields",
+    });
+  } else {
+    req.notes = notes;
+    req.description = description;
+    req.project_id = project_id;
+    next();
+  }
 }
 
 module.exports = {
