@@ -1,4 +1,3 @@
-// Write your "projects" router here!
 const express = require("express");
 const { validateProjectId, validateProject } = require("./projects-middleware");
 
@@ -13,14 +12,12 @@ router.get("/", (req, res, next) => {
     })
     .catch(next);
 });
-//`[GET] /api/projects`
 //Returns an array of projects as the body of the response.
 //If there are no projects it responds with an empty array.
 
 router.get("/:id", validateProjectId, (req, res) => {
   res.json(req.project);
 });
-//`[GET] /api/projects/:id`
 //Returns a project with the given `id` as the body of the response.
 //If there is no project with the given `id` it responds with a status code 404.
 
@@ -31,22 +28,22 @@ router.post("/", validateProject, (req, res, next) => {
     })
     .catch(next);
 });
-//`[POST] /api/projects`
 //Returns the newly created project as the body of the response.
 //If the request body is missing any of the required fields it responds with a status code 400.
 
-//NOT WORKING
-router.put("/:id", validateProjectId, validateProject, (req, res, next) => {
-  Project.update(req.params.id, {
-    name: req.name,
-    description: req.description,
-  })
-    .then((updatedProject) => {
-      res.json(updatedProject);
-    })
-    .catch(next);
-});
-//`[PUT] /api/projects/:id`
+router.put(
+  "/:id",
+  validateProjectId,
+  validateProject,
+  async (req, res, next) => {
+    try {
+      const updatedProject = await Project.update(req.validProjectId, req.body);
+      res.status(200).json(updatedProject);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 //Returns the updated project as the body of the response.
 //If there is no project with the given `id` it responds with a status code 404.
 //If the request body is missing any of the required fields it responds with a status code 400.
@@ -59,14 +56,17 @@ router.delete("/:id", validateProjectId, async (req, res, next) => {
     next(err);
   }
 });
-//`[DELETE] /api/projects/:id`
 //Returns no response body.
 //If there is no project with the given `id` it responds with a status code 404.
 
-router.get("/:id/actions", validateProjectId, (req, res) => {
-  console.log(req.project);
+router.get("/:id/actions", validateProjectId, async (req, res, next) => {
+  try {
+    const actions = await Project.getProjectActions(req.params.id);
+    res.status(200).json(actions);
+  } catch (err) {
+    next(err);
+  }
 });
-//`[GET] /api/projects/:id/actions`
 //Returns an array of actions (could be empty) belonging to a project with the given `id`.
 //If there is no project with the given `id` it responds with a status code 404.
 

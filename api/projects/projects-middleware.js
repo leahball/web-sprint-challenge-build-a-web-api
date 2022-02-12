@@ -9,7 +9,7 @@ async function validateProjectId(req, res, next) {
         message: "no such project",
       });
     } else {
-      req.project = project;
+      req.validateProjectId = project;
       next();
     }
   } catch (err) {
