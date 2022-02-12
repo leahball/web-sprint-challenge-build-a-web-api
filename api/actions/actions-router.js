@@ -36,16 +36,29 @@ router.post("/", validateActionId, (req, res, next) => {
 //If the request body is missing any of the required fields it responds with a status code 400.
 //When adding an action make sure the `project_id` provided belongs to an existing `project`.
 
-router.put("/:id", validateActionId, (req, res) => {
-  console.log(req.action);
+router.put("/:id", validateActionId, validateAction, (req, res, next) => {
+  Action.update(req.params.id, {
+    notes: req.notes,
+    description: req.description,
+    project_id: req.project_id,
+  })
+    .then((updatedAction) => {
+      res.json(updatedAction);
+    })
+    .catch(next);
 });
 //`[PUT] /api/actions/:id`
 //Returns the updated action as the body of the response.
 //If there is no action with the given `id` it responds with a status code 404.
 //If the request body is missing any of the required fields it responds with a status code 400.
 
-router.delete("/:id", validateActionId, (req, res) => {
-  console.log(req.action);
+router.delete("/:id", validateActionId, async (req, res, next) => {
+  try {
+    await Action.remove(req.params.id);
+    res.json(req.action);
+  } catch (err) {
+    next(err);
+  }
 });
 //`[DELETE] /api/actions/:id`
 //Returns no response body.
