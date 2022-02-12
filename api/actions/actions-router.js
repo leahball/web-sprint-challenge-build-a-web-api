@@ -20,24 +20,18 @@ router.get("/:id", validateActionId, (req, res) => {
 //If there is no action with the given `id` it responds with a status code 404.
 
 router.post("/", validateActionId, (req, res, next) => {
-  Action.insert({
-    notes: req.notes,
-    description: req.description,
-    project_id: req.project_id,
-  }).then((newAction) => {
-    res.status(201).json(newAction);
-  });
+  Action.insert(req.body)
+    .then((newAction) => {
+      res.status(201).json(newAction);
+    })
+    .catch(next);
 });
 //Returns the newly created action as the body of the response.
 //If the request body is missing any of the required fields it responds with a status code 400.
 //When adding an action make sure the `project_id` provided belongs to an existing `project`.
 
 router.put("/:id", validateActionId, validateAction, (req, res, next) => {
-  Action.update(req.params.id, {
-    notes: req.notes,
-    description: req.description,
-    project_id: req.project_id,
-  })
+  Action.update(req.params.id, req.body)
     .then((updatedAction) => {
       res.status(200).json(updatedAction);
     })
@@ -48,9 +42,11 @@ router.put("/:id", validateActionId, validateAction, (req, res, next) => {
 //If the request body is missing any of the required fields it responds with a status code 400.
 
 router.delete("/:id", validateActionId, (req, res, next) => {
-  Action.remove(req.params.id).then(() => {
-    res.status(200).json();
-  });
+  Action.remove(req.params.id)
+    .then(() => {
+      res.status(200).json();
+    })
+    .catch(next);
 });
 //Returns no response body.
 //If there is no action with the given `id` it responds with a status code 404.

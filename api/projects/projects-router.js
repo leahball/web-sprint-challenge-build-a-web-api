@@ -37,7 +37,7 @@ router.put(
   validateProject,
   async (req, res, next) => {
     try {
-      const updatedProject = await Project.update(req.validProjectId, req.body);
+      const updatedProject = await Project.update(req.params.id, req.body);
       res.status(200).json(updatedProject);
     } catch (err) {
       next(err);
@@ -50,8 +50,8 @@ router.put(
 
 router.delete("/:id", validateProjectId, async (req, res, next) => {
   try {
-    await Project.remove(req.params.id);
-    res.json(req.project);
+    const deleted = await Project.remove(req.params.id);
+    res.status(200).json(deleted);
   } catch (err) {
     next(err);
   }
